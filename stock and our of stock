@@ -1,0 +1,21 @@
+<?php 
+// Showing stock and out of stock in single product page
+add_filter( 'woocommerce_get_availability', 'wcs_custom_get_availability', 1, 2);
+function wcs_custom_get_availability( $availability, $_product ) {
+    
+    // Change In Backorder Text
+    if ( $_product->is_in_stock() ) {
+        $availability['availability'] = __('In Stock', 'woocommerce');
+    }
+	
+	// Change In Backorder Text
+    if ( $_product->is_on_backorder() ) {
+        $availability['availability'] = __('Out Of Stock <br/> On Order - 2 Weeks Delivery', 'woocommerce');
+    }
+    // Change Out of Stock Text
+    if ( ! $_product->is_in_stock() ) {
+        $availability['availability'] = __('Out Of Stock', 'woocommerce');
+    }
+    return $availability;
+}
+?>
